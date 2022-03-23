@@ -19,6 +19,11 @@ public class ContactsController {
         this.service = service;
     }
 
+    @GetMapping("/")
+    public String index(Model model) {
+        return "index";
+    }
+
     @GetMapping("/contacts")
     public String contacts(Model model) {
         model.addAttribute("contactList", service.getContactList());

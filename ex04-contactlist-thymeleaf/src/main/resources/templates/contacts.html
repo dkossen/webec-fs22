@@ -10,28 +10,28 @@
         <h1>Contact List</h1>
     </header>
     <main>
-        <h1>Contacts</h1>
-        <div th:if="${contact}">
-            <span th:text="${contact.lastName}">Nachname</span>
+        <div>
+            <h1>Contacts</h1>
+            <ol>
+                <li th:each="entry : ${contactList}">
+                    <a th:text="${entry.name}" th:href="@{/contacts/{id}(id=${entry.id})}">Contact</a>
+                </li>
+            </ol>
+        </div>
+        <div th:if="${contact}" class="active">
+            <h2 th:text="${contact.lastName}">Nachname</h2>
+            <table>
+                <tr th:replace="fragments/contacts::singleRow('First name', ${contact.firstName})"></tr>
+                <tr th:replace="fragments/contacts::singleRow('Last name', ${contact.lastName})"></tr>
+                <tr th:replace="fragments/contacts::multiRow('Email', ${contact.email})"></tr>
+                <tr th:replace="fragments/contacts::multiRow('Phone', ${contact.phone})"></tr>
+                <tr th:replace="fragments/contacts::singleRow('Job title', ${contact.jobTitle})"></tr>
+                <tr th:replace="fragments/contacts::singleRow('Company', ${contact.company})"></tr>
+            </table>
         </div>
         <div th:if="${#response.status == 404}">
             Fehler 404: Kontakt nicht gefunden.
         </div>
-        <div th:if="${contact}">
-            <table>
-                <tr th:replace="fragments::singleRow('First name', ${contact.firstName})"></tr>
-                <tr th:replace="fragments::singleRow('Last name', ${contact.lastName})"></tr>
-                <tr th:replace="fragments::multiRow('Email', ${contact.email})"></tr>
-                <tr th:replace="fragments::multiRow('Phone', ${contact.phone})"></tr>
-                <tr th:replace="fragments::singleRow('Job title', ${contact.jobTitle})"></tr>
-                <tr th:replace="fragments::singleRow('Company', ${contact.company})"></tr>
-            </table>
-        </div>
-        <ol>
-            <li th:each="entry : ${contactList}">
-                <a th:text="${entry.name}" th:href="@{/contacts/{id}(id=${entry.id})}">Contact</a>
-            </li>
-        </ol>
     </main>
     <footer>
         built with <a href="https://spring.io/">Spring</a>

@@ -1,0 +1,15 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="html(title,main)">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+    <title th:text="${title}">Title</title>
+</head>
+<div id="container">
+    <header>
+    </header>
+    <main th:text="${main}">Content</main>
+    <footer>
+        built with <a href="https://spring.io/">Spring</a>
+    </footer>
+</div>
+</html>
