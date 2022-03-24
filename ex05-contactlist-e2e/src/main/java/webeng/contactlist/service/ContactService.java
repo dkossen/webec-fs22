@@ -52,4 +52,25 @@ public class ContactService {
                 .mapToInt(c -> c.getEmail().size())
                 .sum();
     }
+
+    public boolean matches(String searchText, Contact contact) {
+//        return List.of(contacts.get(0)); // dummy code
+        searchText = searchText.toLowerCase();
+        return (contact.getFirstName().contains(searchText) ||
+            contact.getLastName().contains(searchText) ||
+            contact.getCompany().contains(searchText) ||
+            contact.getJobTitle().contains(searchText) ||
+            listContains(contact.getEmail(), searchText) ||
+            listContains(contact.getPhone(), searchText));
+    }
+
+    private  boolean listContains(List<String> list, String searchText) {
+        for (var element : list) {
+            if (element.toLowerCase().contains(searchText)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
