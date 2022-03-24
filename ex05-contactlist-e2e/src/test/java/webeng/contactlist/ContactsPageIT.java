@@ -3,6 +3,8 @@ package webeng.contactlist;
 // IT = Integration Test
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -16,21 +18,23 @@ public class ContactsPageIT {
     @LocalServerPort
     int port;
 
+    private ContactsPage page;
+
+    @BeforeEach
+    public void initializePage() {
+        HtmlUnitDriver driver = new HtmlUnitDriver();
+        page = ContactsPage.create(driver, port);
+    }
+
+
     @Test
     public void contactLinksPresentOnMainPage() {
-        var driver = new HtmlUnitDriver();
-        var page = ContactsPage.create(driver, port);
-
         // check if there are 30 contacts
         assertEquals(30, page.links().size());
-
     }
 
     @Test
     public void contactLinkClick() {
-        var driver = new HtmlUnitDriver();
-        var page = ContactsPage.create(driver, port);
-
         page.links().get(0).click();
 
         var tables = page.tables();
@@ -38,7 +42,6 @@ public class ContactsPageIT {
 
         var detailsTable = tables.get(0);
         assertTrue(detailsTable.getText().contains("Librarian"));
-
     }
 
     @Test
