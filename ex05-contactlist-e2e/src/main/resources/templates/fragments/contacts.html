@@ -1,0 +1,21 @@
+<html lang="en">
+<title>Contacts Fragments</title>
+<table>
+    <tr th:fragment="row(name,value)"
+        th:if="${value != null}">
+        <th th:text="${name}">First name</th>
+        <td th:text="${value}">Fritz</td>
+    </tr>
+    <tr th:fragment="listRow(name,list)"
+        th:if="${!list.isEmpty}">
+        <th th:text="${name}">Email addresses</th>
+        <td>
+            <ul>
+                <li th:each="elem : ${list}" th:text="${elem}">
+                    mail@example.com
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>
+</html>

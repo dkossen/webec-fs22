@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" th:replace="fragments/page::html(~{::title},~{::main})">
+<title>Contacts – About</title>
+<main>
+    <h1>About</h1>
+    <p>
+        The Contact List App is an example web app for the <em>Web Engineering</em> course
+        at the <a href="https://www.fhnw.ch/de/studium/technik">Hochschule für Technik FHNW</a>.
+    </p>
+    <h2>Stats</h2>
+    <table>
+        <tr>
+            <td>Contacts</td>
+            <td th:text="${contactCount}">0</td>
+        </tr>
+        <tr>
+            <td>Phone numbers</td>
+            <td th:text="${phoneNumberCount}">0</td>
+        </tr>
+        <tr>
+            <td>Email addresses</td>
+            <td th:text="${emailCount}">0</td>
+        </tr>
+    </table>
+</main>
+</html>
