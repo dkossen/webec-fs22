@@ -1,4 +1,6 @@
 <!DOCTYPE HTML>
+
+
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="fragments/page::html('Home', '<h1>Hauptseite</h1>')">
+      th:replace="fragments/page::html(~(::title), ~(::main))">
 </html>
