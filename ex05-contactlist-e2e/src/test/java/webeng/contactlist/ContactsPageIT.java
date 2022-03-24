@@ -17,34 +17,23 @@ public class ContactsPageIT {
     int port;
 
     @Test
-    public void contactLinksPresent() {
+    public void contactLinksPresentOnMainPage() {
         var driver = new HtmlUnitDriver();
-        driver.navigate().to("http://localhost:" + port + "/contacts");
+        var page = ContactsPage.create(driver, port);
 
         // check if there are 30 contacts
-        var links = driver.findElements(By.cssSelector("#contacts nav a"));
-        assertEquals(30, links.size());
-
-
-//        var body = driver.findElement(By.tagName("body"));
-//        Assertions.assertNotNull(body);
-//
-//        var tables = driver.findElements(By.tagName("table"));
-//        Assertions.assertTrue(tables.isEmpty());
+        assertEquals(30, page.links().size());
 
     }
 
     @Test
     public void contactLinkClick() {
         var driver = new HtmlUnitDriver();
-        driver.navigate().to("http://localhost:" + port + "/contacts");
+        var page = ContactsPage.create(driver, port);
 
-        //
-        var links = driver.findElements(By.cssSelector("#contacts nav a"));
-        var firstLink = links.get(0);
-        firstLink.click();
+        page.links().get(0).click();
 
-        var tables = driver.findElements(By.cssSelector("#contacts table"));
+        var tables = page.tables();
         assertFalse(tables.isEmpty());
 
         var detailsTable = tables.get(0);
@@ -57,15 +46,11 @@ public class ContactsPageIT {
         var driver = new HtmlUnitDriver();
         driver.navigate().to("http://localhost:" + port + "/contacts");
 
-        //
         var links = driver.findElements(By.cssSelector("#contacts nav a"));
         var firstLink = links.get(0);
         firstLink.click();
 
-
-        // todo check video
         // check if there are 30 contacts
-        var links = driver.findElements(By.cssSelector("#contacts nav a"));
         assertEquals(30, links.size());
 
     }
