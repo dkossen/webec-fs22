@@ -7,6 +7,7 @@ import webeng.contactlist.model.Contact;
 import webeng.contactlist.model.ContactListEntry;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -53,8 +54,18 @@ public class ContactService {
                 .sum();
     }
 
+    public List<Contact> searchContacts(String searchText) {
+        searchText = searchText.toLowerCase();
+        var result = new ArrayList<Contact>();
+        for (var contact : contacts.values()) {
+            if (matches(searchText, contact)) {
+                result.add(contact);
+            }
+        }
+        return result;
+    }
+
     public boolean matches(String searchText, Contact contact) {
-//        return List.of(contacts.get(0)); // dummy code
         searchText = searchText.toLowerCase();
         return (contact.getFirstName().contains(searchText) ||
             contact.getLastName().contains(searchText) ||

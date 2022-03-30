@@ -23,6 +23,7 @@ public class ContactsController {
     @GetMapping("/contacts")
     public String contacts(Model model, @RequestParam(required = false) String search) {
         model.addAttribute("contactList", service.getContactList());
+        model.addAttribute("searchResult", service.searchContacts("a").size());
         return "contacts";
     }
 

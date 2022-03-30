@@ -12,6 +12,13 @@
         </ul>
     </nav>
     <div>
+        <div>
+            <form method="post" action="contacts.html?Search=">
+                <input type="text" id="search-input" name="search-input">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+<!--        <div class="info" th:text="${searchResult}">0</div>-->
         <div class="info" th:if="${contact == null && #response.status != 404}">
             Select a contact on the left
         </div>
