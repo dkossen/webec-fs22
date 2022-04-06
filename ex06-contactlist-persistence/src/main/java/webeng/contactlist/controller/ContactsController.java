@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import webeng.contactlist.service.ContactService;
 
@@ -31,6 +32,32 @@ public class ContactsController {
         checkSearch(search);
         model.addAttribute("contactList", service.getContactList(search));
         return "contacts";
+    }
+
+    @GetMapping("/contacts/add")
+    public String addContact(Model model) {
+        return "add-contact";
+    }
+
+    @PostMapping("contacts/add")
+    public String addContact(String firstName, String lastName,
+                             String jobTitle, String company) {
+        service.add(firstName, lastName, jobTitle, company);
+        return "redirect:/contacts";
+    }
+
+    @GetMapping("/contacts/{id}/update")
+    public String updateContact(Model model) {
+        return "update-contact";
+    }
+
+    @PostMapping("contacts/{id}/update")
+    public String updateContact(@PathVariable int id, String firstName, String lastName,
+                             String jobTitle, String company, Model model) {
+        service.add(firstName, lastName, jobTitle, company);
+        var contact = service.findContact(id).orElseThrow(ContactNotFound::new);
+        model.addAttribute("contact", contact);
+        return "redirect:/contacts";
     }
 
     @GetMapping("/contacts/{id}")

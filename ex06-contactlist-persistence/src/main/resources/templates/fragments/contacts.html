@@ -26,5 +26,10 @@
         </td>
     </tr>
 
+    <tr th:fragment="formRow(label,type,name, value)">
+        <td><label th:text="${label}">Label</label></td>
+        <td><input th:type="${type}" th:name="${name}" th:value="${value}"></td>
+    </tr>
+
 </table>
 </html>

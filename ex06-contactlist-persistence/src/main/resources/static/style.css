@@ -230,3 +230,25 @@ ul.plain > li {
     border-radius: 3px;
     padding: 0 1px;
 }
+
+.btn-container {
+    text-align: right;
+    margin: 20px auto;
+}
+
+form table {
+    margin: 0 auto;
+}
+
+form table tr td, form table tr:not(:last-child) > * {
+    border-bottom: none;
+}
+
+form table input {
+    border: 1px solid #ccc;
+}
+
+form .btn-container {
+    text-align: center;
+    margin: 20px auto;
+}
