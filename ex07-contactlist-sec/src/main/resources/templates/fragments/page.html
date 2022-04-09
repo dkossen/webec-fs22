@@ -21,6 +21,11 @@
     </main>
     <footer>
         built with <a href="https://spring.io/">Spring</a>
+        <p>
+            <form th:action="@{'/logout'}" method="post">
+                <input type="submit" value="Logout">
+            </form>
+        </p>
     </footer>
 </div>
 </html>

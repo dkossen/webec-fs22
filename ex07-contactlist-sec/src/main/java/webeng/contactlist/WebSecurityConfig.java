@@ -19,9 +19,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/*.css").permitAll()
                     .antMatchers("/contacts").authenticated()
                     .regexMatchers("/contacts/[0-9]+").authenticated()
+                    .antMatchers("/logout").authenticated()
                     .anyRequest().hasRole("ADMIN")
                     .and()
-                .formLogin();
+//            .formLogin();
+                .formLogin().loginPage("/login").permitAll();
     }
 
     @Bean
