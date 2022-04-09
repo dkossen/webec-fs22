@@ -236,6 +236,34 @@ ul.plain > li {
     margin: 20px auto;
 }
 
+.grid-form {
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    grid-gap: 0.8em 1.2em;
+}
+
+ul.plain {
+    margin: 0;
+    padding: 0;
+}
+
+ul.plain > li {
+    list-style: none;
+}
+
+.padded-item {
+    padding: 0.4em;
+    display: inline-block;
+}
+
+.padded-label {
+    padding: 0.4em 0;
+}
+
+.paragraph {
+    margin: 1em 0;
+}
+
 form table {
     margin: 0 auto;
 }

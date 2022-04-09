@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import webeng.contactlist.service.ContactService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.constraints.NotBlank;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
@@ -46,18 +50,45 @@ public class ContactsController {
         return "redirect:/contacts";
     }
 
-    @GetMapping("/contacts/{id}/update")
-    public String updateContact(Model model) {
-        return "update-contact";
-    }
-
-    @PostMapping("contacts/{id}/update")
-    public String updateContact(@PathVariable int id, String firstName, String lastName,
-                             String jobTitle, String company, Model model) {
-        service.add(firstName, lastName, jobTitle, company);
+    @GetMapping("/contacts/{id}/edit")
+    public String updateContact(@PathVariable int id,  Model model) {
         var contact = service.findContact(id).orElseThrow(ContactNotFound::new);
         model.addAttribute("contact", contact);
-        return "redirect:/contacts";
+        return "edit-contact";
+    }
+
+    @PostMapping("contacts/{id}/edit")
+    public String editContact(@PathVariable int id,
+                              @RequestParam @NotBlank String firstName,
+                              @RequestParam @NotBlank String lastName,
+                              @RequestParam String jobTitle,
+                              @RequestParam String company,
+                              @RequestParam String addEmail,
+                              @RequestParam String addPhone,
+                              HttpServletRequest request) {
+        var contact = service.findContact(id).orElseThrow(ContactNotFound::new);
+        contact.setFirstName(firstName.strip());
+        contact.setLastName(lastName.strip());
+        contact.setJobTitle(jobTitle.isBlank() ? null : jobTitle.strip());
+        contact.setCompany(company.isBlank() ? null : company.strip());
+        for (int i = contact.getEmail().size(); i >= 0; i--) {
+            if (request.getParameterMap().containsKey("deleteEmail" + i)) {
+                contact.getEmail().remove(i);
+            }
+        }
+        if (!addEmail.isBlank()) {
+            contact.getEmail().add(addEmail.strip());
+        }
+        for (int i = contact.getPhone().size(); i >= 0; i--) {
+            if (request.getParameterMap().containsKey("deletePhone" + i)) {
+                contact.getPhone().remove(i);
+            }
+        }
+        if (!addPhone.isBlank()) {
+            contact.getPhone().add(addPhone.strip());
+        }
+        service.update(contact);
+        return "redirect:/contacts/" + id;
     }
 
     @GetMapping("/contacts/{id}")
@@ -67,6 +98,13 @@ public class ContactsController {
         model.addAttribute("contactList", service.getContactList(search));
         model.addAttribute("contact", contact);
         return "contacts";
+    }
+
+    @PostMapping("/contacts/{id}/delete")
+    public String deleteContact(@PathVariable int id) {
+        var contact = service.findContact(id).orElseThrow(ContactNotFound::new);
+        service.delete(contact);
+        return "redirect:/contacts";
     }
 
     private void checkSearch(String search) {

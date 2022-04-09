@@ -73,4 +73,13 @@ public class ContactService {
     public Contact add(Contact contact) {
         return repository.save(contact);
     }
+
+    public Contact update(Contact contact) {
+        return repository.save(contact);
+    }
+
+    public void delete(Contact contact) {
+        repository.delete(contact);
+    }
+
 }

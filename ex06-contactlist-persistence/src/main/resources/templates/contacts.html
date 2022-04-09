@@ -41,7 +41,10 @@
                 <tr th:replace="fragments/contacts::textRow('Company','company',${contact.company},${search})"></tr>
             </table>
             <div class="btn-container">
-                <a class="button update" th:href="@{'/contacts/' + ${contact.id} + '/update'}">Edit</a>
+                <a th:href="@{${contact.id} + '/edit'}" class="button" >Edit</a>
+                <form th:action="@{${contact.id} + '/delete'}" method="post" style="display: inline;">
+                    <input type="submit" value="Delete">
+                </form>
             </div>
         </div>
     </div>
